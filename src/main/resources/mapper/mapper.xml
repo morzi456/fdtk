@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vs1.fdtk.dao.selectFdtkListDAO">
+	<select id="selectFdtkList" resultType="com.vs1.fdtk.dto.Fdtk">
+		SELECT A.TRUK_CD AS trukCd
+				,A.CUST_CD AS custCd 
+				,A.BIZ_GBCD AS bizGbcd 
+				,A.TRUK_NM AS trukNm
+				,A.LAST_IN_DTM AS lastInDtm 
+				,A.LAST_OUT_DTM AS lastOutDtm 
+				,A.MAIN_IMG_NM AS mainImgNm 
+				,A.USE_YN AS useYn
+				,A.REG_DTM AS regDtm 
+				,A.RGST_ID AS rgstId
+				,A.RGST_IP AS rgstIp 
+				,A.CHG_DTM AS chgDtm
+				,A.CHGP_ID AS chgpId
+				,A.CHGP_IP AS chgpIp
+				,(SELECT CD_NM FROM CM_CD_MST WHERE CSF_CD = 'BIZ_GBCD' AND CD = A.BIZ_GBCD) AS bizGbnm
+				,B.CUST_NM AS custNm
+				,B.TEL_NO AS telNo
+		FROM  VD_TRUK_MST A
+				,CS_CUST_MST B
+		WHERE 1=1
+		AND A.CUST_CD = B.CUST_CD
+		AND A.USE_YN = 'Y'
+		AND B.USE_YN = 'Y'
+		ORDER BY A.TRUK_CD DESC
+	</select>
+</mapper>
